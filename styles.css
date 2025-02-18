@@ -1,119 +1,116 @@
-* {
-    box-sizing: border-box;
+/* Загальні стилі для сторінки */
+body {
     margin: 0;
     padding: 0;
-    font-family: sans-serif;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #121212; /* Темний фон */
+    color: #e0e0e0; /* Світлий текст */
   }
   
-  body {
-    background-color: #2d2f36;
-    color: #fff;
-  }
-  
-  /* Контейнер для всієї сторінки */
+  /* Контейнер сторінки */
   .container {
-    width: 90%;
-    max-width: 1400px;
-    margin: 5% auto;
-    padding: 20px;
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
   }
   
-  /* Блок з картою */
+  /* Секція з картою */
   .map-section {
-    flex: 1 1 60%;
-    position: relative;
-    min-width: 300px;
+    flex: 1 1 500px;
+    margin-right: 20px;
   }
   
-  /* Саме зображення карти */
   .map-image {
     width: 100%;
-    border: 2px solid #444;
-    border-radius: 6px;
+    height: auto;
+    border: 2px solid #333;
+    border-radius: 8px;
   }
   
-  /* Позиціонування позначок на карті */
-  .point-label {
-    position: absolute;
-    color: #f0f;
-    font-weight: bold;
-    text-shadow: 1px 1px 2px #000;
-    pointer-events: none; /* Щоб не заважати клікам */
-  }
-  
-  /* Демонстраційне розміщення точок */
-  .label-A {
-    top: 40%;
-    left: 20%;
-  }
-  .label-B {
-    top: 45%;
-    left: 30%;
-  }
-  .label-C {
-    top: 50%;
-    left: 40%;
-  }
-  .label-D {
-    top: 55%;
-    left: 50%;
-  }
-  .label-E {
-    top: 60%;
-    left: 60%;
-  }
-  
-  /* Блок з формою та результатами */
+  /* Панель керування */
   .controls-section {
-    flex: 1 1 35%;
-    background-color: #1c1e24;
-    border: 2px solid #444;
-    border-radius: 6px;
+    flex: 1 1 300px;
+    background-color: #1e1e1e; /* Темніший фон */
     padding: 20px;
-    min-width: 250px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
   }
   
   .controls-section h2 {
-    margin-bottom: 10px;
+    margin-top: 0;
+    font-size: 24px;
+    color: #ffffff;
   }
   
   .form-group {
     margin-bottom: 15px;
   }
   
-  label {
+  .form-group label {
     display: block;
+    font-weight: bold;
+    color: #b0b0b0;
     margin-bottom: 5px;
   }
   
-  select, button {
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid #555;
-    background-color: #333;
-    color: #fff;
+  .form-group select {
     width: 100%;
-    margin-bottom: 10px;
-    cursor: pointer;
+    padding: 8px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background-color: #2a2a2a;
+    color: #e0e0e0;
   }
   
-  select:focus, button:focus {
-    outline: none;
-    border-color: #888;
+  /* Кнопки */
+  button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4285F4;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
   }
   
   button:hover {
-    background-color: #444;
+    background-color: #2c6ad1;
   }
   
+  /* Блок з результатами */
   .result {
+    width: 100%;
     margin-top: 20px;
-    padding: 10px;
-    background-color: #333;
-    border-radius: 4px;
-    min-height: 60px;
+  }
+  
+  .result-card {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+  }
+  
+  .result-card h2 {
+    margin-top: 0;
+    color: #ffffff;
+  }
+  
+  .result-label {
+    font-weight: bold;
+    color: #b0b0b0;
+  }
+  
+  hr {
+    border: none;
+    border-top: 1px solid #333;
+    margin: 10px 0 20px;
   }
   
