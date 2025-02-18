@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <title>page</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div class="container">
+  <div class="map-section">
+    <img src="./img/map.png" alt="Map" class="map-image" />
+  </div>
+
+  <!-- Блок з елементами керування та виводом результатів -->
+  <div class="controls-section">
+    <h2>Налаштування</h2>
+
+    <div class="form-group">
+      <label for="functionSelect">Оберіть функцію:</label>
+      <select id="functionSelect">
+        <option value="distance">Distance (Проста відстань)</option>
+        <option value="list">List (Список)</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+        <label for="functionSelect">Оберіть алгоритм:</label>
+        <select id="functionSelect">
+          <option value="dijkstra">Dijkstra algorithm </option>
+          <option value="floydWarshal">floyd-Warshal algorithm</option>
+        </select>
+      </div>
+
+    <div class="form-group">
+      <label for="startSelect">Точка початку:</label>
+      <select id="startSelect">
+        <option value="KPI">KPI</option>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="D">D</option>
+        <option value="E">E</option>
+        <option value="RedUni">Red University</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="endSelect">Точка призначення:</label>
+      <select id="endSelect">
+        <option value="KPI">KPI</option>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="D">D</option>
+        <option value="E">E</option>
+        <option value="RedUni">Red University</option>
+      </select>
+    </div>
+
+    <button id="calculateBtn">Calculate</button>
+    <button id="resetBtn">Reset Result</button>
+
+    <div class="result" id="result">
+      <!-- Тут відображатиметься результат -->
+    </div>
+  </div>
+</div>
+</body>
+</html>

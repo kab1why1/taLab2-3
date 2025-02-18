@@ -1,0 +1,119 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+  }
+  
+  body {
+    background-color: #2d2f36;
+    color: #fff;
+  }
+  
+  /* Контейнер для всієї сторінки */
+  .container {
+    width: 90%;
+    max-width: 1400px;
+    margin: 5% auto;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  /* Блок з картою */
+  .map-section {
+    flex: 1 1 60%;
+    position: relative;
+    min-width: 300px;
+  }
+  
+  /* Саме зображення карти */
+  .map-image {
+    width: 100%;
+    border: 2px solid #444;
+    border-radius: 6px;
+  }
+  
+  /* Позиціонування позначок на карті */
+  .point-label {
+    position: absolute;
+    color: #f0f;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px #000;
+    pointer-events: none; /* Щоб не заважати клікам */
+  }
+  
+  /* Демонстраційне розміщення точок */
+  .label-A {
+    top: 40%;
+    left: 20%;
+  }
+  .label-B {
+    top: 45%;
+    left: 30%;
+  }
+  .label-C {
+    top: 50%;
+    left: 40%;
+  }
+  .label-D {
+    top: 55%;
+    left: 50%;
+  }
+  .label-E {
+    top: 60%;
+    left: 60%;
+  }
+  
+  /* Блок з формою та результатами */
+  .controls-section {
+    flex: 1 1 35%;
+    background-color: #1c1e24;
+    border: 2px solid #444;
+    border-radius: 6px;
+    padding: 20px;
+    min-width: 250px;
+  }
+  
+  .controls-section h2 {
+    margin-bottom: 10px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  select, button {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #555;
+    background-color: #333;
+    color: #fff;
+    width: 100%;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  
+  select:focus, button:focus {
+    outline: none;
+    border-color: #888;
+  }
+  
+  button:hover {
+    background-color: #444;
+  }
+  
+  .result {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #333;
+    border-radius: 4px;
+    min-height: 60px;
+  }
+  
