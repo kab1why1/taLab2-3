@@ -19,22 +19,26 @@
     <div class="form-group">
       <label for="functionSelect">Оберіть функцію:</label>
       <select id="functionSelect">
+        <option value="" selected disabled>-- Оберіть функцію --</option>
         <option value="distance">Distance (Проста відстань)</option>
         <option value="list">List (Список)</option>
       </select>
     </div>
 
     <div class="form-group">
-        <label for="functionSelect">Оберіть алгоритм:</label>
-        <select id="functionSelect">
-          <option value="dijkstra">Dijkstra algorithm </option>
-          <option value="terri">Terri algorithm</option>
-        </select>
-      </div>
+      <label for="algorithmSelect">Оберіть алгоритм:</label>
+      <!-- Змінив id на "algorithmSelect" для уникнення повторень -->
+      <select id="algorithmSelect">
+        <option value="" selected disabled>-- Оберіть алгоритм --</option>
+        <option value="dijkstra">Dijkstra algorithm</option>
+        <option value="terri">Terri algorithm</option>
+      </select>
+    </div>
 
     <div class="form-group">
       <label for="startSelect">Точка початку:</label>
       <select id="startSelect">
+        <option value="" selected disabled>-- Оберіть точку початку --</option>
         <option value="Red Univesity">1. Red Univesity</option>
         <option value="St. Andrew's Church">2. St. Andrew's Church</option>
         <option value="St. Michael's Golden-Domed Monastery">3. St. Michael's Golden-Domed Monastery</option>
@@ -52,6 +56,7 @@
     <div class="form-group">
       <label for="endSelect">Точка призначення:</label>
       <select id="endSelect">
+        <option value="" selected disabled>-- Оберіть точку призначення --</option>
         <option value="Red Univesity">1. Red Univesity</option>
         <option value="St. Andrew's Church">2. St. Andrew's Church</option>
         <option value="St. Michael's Golden-Domed Monastery">3. St. Michael's Golden-Domed Monastery</option>
@@ -78,7 +83,6 @@
 <script src="./scripts/dijkstra.js"></script>
 <script src="./scripts/terri.js"></script>
 <script src="./scripts/script.js"></script>
-
 
 </body>
 </html>
