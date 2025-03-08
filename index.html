@@ -2,7 +2,7 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8" />
-  <title>page</title>
+  <title>lab2</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -12,7 +12,6 @@
     <img src="./img/map.png" alt="Map" class="map-image" />
   </div>
 
-  <!-- Блок з елементами керування та виводом результатів -->
   <div class="controls-section">
     <h2>Налаштування</h2>
 
@@ -27,7 +26,6 @@
 
     <div class="form-group">
       <label for="algorithmSelect">Оберіть алгоритм:</label>
-      <!-- Змінив id на "algorithmSelect" для уникнення повторень -->
       <select id="algorithmSelect">
         <option value="" selected disabled>-- Оберіть алгоритм --</option>
         <option value="dijkstra">Dijkstra algorithm</option>
@@ -74,15 +72,28 @@
     <button id="calculateBtn">Calculate</button>
     <button id="resetBtn">Reset Result</button>
 
+    <div class="form-group">
+      <label for="sccFunctionSelect">Оберіть алгоритм пошуку сильної зв'язності: </label>
+      <select id="sccFunctionSelect">
+        <option value="" selected disabled>-- Оберіть функцію --</option>
+        <option value="tarianAlgorightm">Алгоритм Тар'яна</option>
+        <option value="AlgorightmOfScc">Алгоритм компонент сильної зв'язності</option>
+      </select>
+    </div>
+
+    <button id="ScccalculateBtn">Scc algorithm</button>
+
     <div class="result" id="result">
       <!-- Тут відображатиметься результат -->
     </div>
   </div>
 </div>
 
+<!-- Підключення файлів алгоритмів та основного скрипту -->
 <script src="./scripts/dijkstra.js"></script>
-<script src="./scripts/terri.js"></script>f
+<script src="./scripts/terri.js"></script>
+<script src="./TAlab3/tarjan.js"></script>
 <script src="./scripts/script.js"></script>
-
+<script src="./TAlab3/byParts.js"></script>
 </body>
 </html>
