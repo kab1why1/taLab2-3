@@ -12,8 +12,8 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    max-width: 1200px;
-    margin: 20px auto;
+    max-width: 1600px;
+    margin: 100px auto;
     padding: 20px;
   }
   
@@ -47,13 +47,14 @@ body {
   
   .form-group {
     margin-bottom: 15px;
+    margin-top: 15px;
   }
   
   .form-group label {
     display: block;
     font-weight: bold;
     color: #b0b0b0;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
   }
   
   .form-group select {
