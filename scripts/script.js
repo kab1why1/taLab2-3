@@ -1,6 +1,3 @@
-// script.js
-
-// Мапа відповідностей назв точок і їх id для алгоритмів маршруту
 const placeId = {
   "Red Univesity": 1,                  
   "St. Andrew's Church": 2,              
@@ -194,10 +191,10 @@ document.getElementById("ScccalculateBtn").addEventListener("click", () => {
   let sccs;
   if (sccFuncSelect === "tarianAlgorightm") {
     sccs = tarjanAlgorithm(graphObj);
-    var resultStr = printSccs(sccs);
+    var resultStr = printSccs(sccs) + "tarjan was used.";
   } else if (sccFuncSelect === "AlgorightmOfScc") {
     sccs = algorithmByPaths(graphObj);
-    var resultStr = printSccsByPaths(sccs);
+    var resultStr = printSccsByPaths(sccs) + "byParts was used";
   } else {
     resultStr = "Не обрано алгоритм для пошуку SCC.";
   }
