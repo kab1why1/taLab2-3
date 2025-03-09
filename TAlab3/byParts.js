@@ -1,5 +1,3 @@
-// ccsByPaths.js
-
 /**
  * @param {Object} graph - Об'єкт графа.
  * @returns {Array<Array<number>>} - Масив компонент, де кожна компонента – масив числових позначень вершин.

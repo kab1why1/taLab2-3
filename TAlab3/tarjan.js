@@ -1,66 +1,82 @@
-// tarjan.js
+/**
+ * @param {Object} graph
+ * @returns {Array<Array<number>>} 
+ */
+function tarjanAlgorithm(graph) {
+  let index = 0;
+  const indices = {};    
+  const lowlink = {};    
+  const stack = [];     
+  const onStack = {};    
+  const sccs = [];      
+
+  /**
+   * @param {Object} vertex - Вершина графа.
+   */
+  function strongConnect(vertex) {
+    const vSign = vertex.sign;
+    indices[vSign] = index;
+    lowlink[vSign] = index;
+    index++;
+    stack.push(vertex);
+    onStack[vSign] = true;
+
+    const neighbours = graph.neighbourVertices[vSign] || [];
+    neighbours.forEach(nSign => {
+      const neighbourVertex = graph.get(nSign);
+      if (indices[nSign] === undefined) {
+        // Сусід ще не відвіданий — запускаємо рекурсивний виклик
+        strongConnect(neighbourVertex);
+        lowlink[vSign] = Math.min(lowlink[vSign], lowlink[nSign]);
+      } else if (onStack[nSign]) {
+        // Сусід знаходиться в стеку — оновлюємо lowlink поточної вершини
+        lowlink[vSign] = Math.min(lowlink[vSign], indices[nSign]);
+      }
+    });
+
+    if (lowlink[vSign] === indices[vSign]) {
+      const component = [];
+      let w;
+      do {
+        w = stack.pop();
+        onStack[w.sign] = false;
+        component.push(w.sign);
+      } while (w.sign !== vSign);
+      sccs.push(component);
+    }
+  }
+
+  graph.vertices.forEach(vertex => {
+    if (indices[vertex.sign] === undefined) {
+      strongConnect(vertex);
+    }
+  });
+
+  return sccs;
+}
 
 /**
  * @param {Object} graph - Об'єкт графа.
- * @returns {Array<Array<number>>} - Масив компонент, де кожна компонента – масив чисел.
+ * @returns {Array<Array<number>>} - Масив компонент.
  */
-function tarjanAlgorithm(graph) {
-    const sccs = [];
-    const notVisited = graph.vertices.map(v => v.sign);
-    while (notVisited.length > 0) {
-      const stack = [];
-      const firstSign = notVisited[0];
-      stack.push(graph.get(firstSign));
-  
-      while (stack.length > 0) {
-        const vertex = stack[stack.length - 1];
-        const neighbours = (graph.neighbourVertices[vertex.sign] || []).filter(vSign => {
-          const inStack = stack.some(item => item.sign === vSign);
-          return !inStack && notVisited.includes(vSign);
-        });
-        
-        const idx = notVisited.indexOf(vertex.sign);
-        if (idx !== -1) {
-          notVisited.splice(idx, 1);
-        }
-        
-        if (neighbours.length === 0) {
-          break;
-        } else {
-          stack.push(graph.get(neighbours[0]));
-        }
-      }
-      const component = stack.map(v => v.sign);
-      sccs.push(component);
+function algorithmCCS(graph) {
+  return tarjanAlgorithm(graph);
+}
+
+/**
+ * @param {Array<Array<number>>} sccs - Масив компонент (масив масивів чисел).
+ * @returns {string} - Форматований рядок для виводу.
+ */
+function printSccs(sccs) {
+  let result = "";
+  sccs.forEach((component, idx) => {
+    if (component && component.length > 0) {
+      result += `SCC${idx + 1}: ${component.join(", ")}\n`;
     }
-    
-    return sccs;
-  }
-  
-  /**
-   * Метод, що викликає алгоритм Тар'яна для пошуку компонент сильної зв’язності.
-   * @param {Object} graph - Об'єкт графа.
-   * @returns {Array<Array<number>>} - Масив компонент.
-   */
-  function algorithmCCS(graph) {
-    return tarjanAlgorithm(graph);
-  }
-  
-  /**
-   * @param {Array<Array<number>>} sccs - Масив компонент (масив масивів чисел).
-   * @returns {string} - Форматований рядок для виводу.
-   */
-  function printSccs(sccs) {
-    let result = "";
-    sccs.forEach((component, idx) => {
-      if (component && component.length > 0) {
-        result += `SCC${idx + 1}: ${component.join(", ")}\n`;
-      }
-    });
-    return result;
-  }
-  
-  if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = { tarjanAlgorithm, algorithmCCS, printSccs };
-  }
-  
+  });
+  return result;
+}
+
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+  module.exports = { tarjanAlgorithm, algorithmCCS, printSccs };
+}
