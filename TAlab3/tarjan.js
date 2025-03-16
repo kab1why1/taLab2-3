@@ -1,82 +1,104 @@
-/**
- * @param {Object} graph
- * @returns {Array<Array<number>>} 
- */
-function tarjanAlgorithm(graph) {
-  let index = 0;
-  const indices = {};    
-  const lowlink = {};    
-  const stack = [];     
-  const onStack = {};    
-  const sccs = [];      
+// tarjan.js
 
-  /**
-   * @param {Object} vertex - Вершина графа.
-   */
-  function strongConnect(vertex) {
-    const vSign = vertex.sign;
-    indices[vSign] = index;
-    lowlink[vSign] = index;
-    index++;
-    stack.push(vertex);
-    onStack[vSign] = true;
+// TarjanGraph class implementing strongly connected components search
+class TarjanGraph {
+  constructor(v) {
+    this.V = v;
+    this.adj = new Array(v);
+    for (let i = 0; i < v; i++) {
+      this.adj[i] = [];
+    }
+    this.Time = 0;
+    this.resultComponents = [];
+  }
 
-    const neighbours = graph.neighbourVertices[vSign] || [];
-    neighbours.forEach(nSign => {
-      const neighbourVertex = graph.get(nSign);
-      if (indices[nSign] === undefined) {
-        // Сусід ще не відвіданий — запускаємо рекурсивний виклик
-        strongConnect(neighbourVertex);
-        lowlink[vSign] = Math.min(lowlink[vSign], lowlink[nSign]);
-      } else if (onStack[nSign]) {
-        // Сусід знаходиться в стеку — оновлюємо lowlink поточної вершини
-        lowlink[vSign] = Math.min(lowlink[vSign], indices[nSign]);
+  addEdge(v, w) {
+    this.adj[v].push(w);
+  }
+
+  // Recursive function to find SCCs starting from vertex u
+  SCCUtil(u, low, disc, stackMember, st) {
+    disc[u] = this.Time;
+    low[u] = this.Time;
+    this.Time++;
+    stackMember[u] = true;
+    st.push(u);
+
+    for (let n of this.adj[u]) {
+      if (disc[n] === -1) {
+        this.SCCUtil(n, low, disc, stackMember, st);
+        low[u] = Math.min(low[u], low[n]);
+      } else if (stackMember[n]) {
+        low[u] = Math.min(low[u], disc[n]);
       }
-    });
+    }
 
-    if (lowlink[vSign] === indices[vSign]) {
-      const component = [];
-      let w;
-      do {
-        w = stack.pop();
-        onStack[w.sign] = false;
-        component.push(w.sign);
-      } while (w.sign !== vSign);
-      sccs.push(component);
+    if (low[u] === disc[u]) {
+      let component = [];
+      let w = -1;
+      while (w !== u) {
+        w = st.pop();
+        component.push(w);
+        stackMember[w] = false;
+      }
+      this.resultComponents.push(component);
     }
   }
 
-  graph.vertices.forEach(vertex => {
-    if (indices[vertex.sign] === undefined) {
-      strongConnect(vertex);
+  SCC() {
+    let disc = new Array(this.V).fill(-1);
+    let low = new Array(this.V).fill(-1);
+    let stackMember = new Array(this.V).fill(false);
+    let st = [];
+
+    for (let i = 0; i < this.V; i++) {
+      if (disc[i] === -1) {
+        this.SCCUtil(i, low, disc, stackMember, st);
+      }
     }
-  });
-
-  return sccs;
+    return this.resultComponents;
+  }
 }
 
-/**
- * @param {Object} graph - Об'єкт графа.
- * @returns {Array<Array<number>>} - Масив компонент.
- */
-function algorithmCCS(graph) {
-  return tarjanAlgorithm(graph);
-}
+// This function converts your project graph (1-indexed)
+// to a 0-indexed graph for Tarjan's algorithm, runs it,
+// and then outputs the result into the "result" element.
+function runTarjan() {
+  // Total number of nodes (assuming idPlace has keys 1..11)
+  const V = Object.keys(idPlace).length; // 11
+  let tg = new TarjanGraph(V);
 
-/**
- * @param {Array<Array<number>>} sccs - Масив компонент (масив масивів чисел).
- * @returns {string} - Форматований рядок для виводу.
- */
-function printSccs(sccs) {
-  let result = "";
+  // Transform the project graph (global "graph" object) into our TarjanGraph.
+  // We subtract 1 from each key and edge to work with 0-indexing.
+  for (let key in graph) {
+    let u = parseInt(key) - 1;
+    let edges = graph[key];
+    for (let edge of edges) {
+      let v = edge.node - 1;
+      tg.addEdge(u, v);
+    }
+  }
+
+  // Get the list of SCCs (each component is an array of 0-indexed node numbers)
+  const sccs = tg.SCC();
+
+  // Build an HTML string with the results, converting back to place names.
+  let resultHTML = `<h3>Strongly Connected Components (Tarjan's Algorithm):</h3>`;
   sccs.forEach((component, idx) => {
-    if (component && component.length > 0) {
-      result += `SCC${idx + 1}: ${component.join(", ")}\n`;
-    }
+    // Convert each 0-indexed node back to the 1-indexed id then to a place name.
+    let compNames = component.map(index => idPlace[index + 1]);
+    resultHTML += `<p>Component ${idx + 1}: ${compNames.join(", ")}</p>`;
   });
-  return result;
+  document.getElementById("result").innerHTML = resultHTML;
 }
 
-if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-  module.exports = { tarjanAlgorithm, algorithmCCS, printSccs };
-}
+// Attach event listener to the "ScccalculateBtn" button.
+document.getElementById("ScccalculateBtn").addEventListener("click", () => {
+  // Check that a SCC function is selected
+  const sccSelect = document.getElementById("sccFunctionSelect");
+  if (!sccSelect.value) {
+    alert("Будь ласка, оберіть функцію пошуку сильної зв'язності!");
+    return;
+  }
+  runTarjan();
+});
