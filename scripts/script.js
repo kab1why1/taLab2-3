@@ -1,3 +1,4 @@
+// --- Existing constants and graph definition ---
 const placeId = {
   "Red Univesity": 1,                  
   "St. Andrew's Church": 2,              
@@ -26,8 +27,6 @@ const idPlace = {
   11: "One street museum"
 };
 
-// Граф для алгоритмів маршруту (Dijkstra, Terri)
-// (залишаємо без змін)
 const graph = {
   1: [
     { node: 7, dist: 4.0 },
@@ -58,7 +57,9 @@ const graph = {
   7: [
     { node: 1, dist: 4.0 }
   ],
-  8: [],
+  8: [
+    {node: 5, dist: 0.8}
+  ], // 5
   9: [
     { node: 4, dist: 0.44 },
     { node: 2, dist: 0.71 },
@@ -74,7 +75,29 @@ const graph = {
   ]
 };
 
-// Обробка подій для розрахунку маршруту та інших алгоритмів (залишаємо існуючу логіку)
+function createTarjanGraph(simpleGraph) {
+  const vertices = [];
+  const neighbourVertices = {};
+
+  // Create vertices and neighbour lists
+  for (let key in simpleGraph) {
+    const id = parseInt(key);
+    vertices.push({ sign: id });
+    // For each vertex, map to an array of neighboring vertex ids (ignoring distances)
+    neighbourVertices[id] = simpleGraph[key].map(edge => edge.node);
+  }
+
+  // Provide a method to retrieve vertex by its sign
+  return {
+    vertices: vertices,
+    neighbourVertices: neighbourVertices,
+    get: function(sign) {
+      return vertices.find(v => v.sign === sign);
+    }
+  };
+}
+
+// --- Existing event listener for route calculation ---
 document.getElementById("calculateBtn").addEventListener("click", () => {
   const allSelects = document.getElementsByTagName("select");
   for (let select of allSelects) {
@@ -148,57 +171,28 @@ document.getElementById("resetBtn").addEventListener("click", () => {
   document.getElementById("result").innerHTML = "";
 });
 
-
-
+// --- New event listener for Tarjan's (SCC) algorithm ---
 document.getElementById("ScccalculateBtn").addEventListener("click", () => {
-  // Створюємо приклад графа з числовими позначеннями, що формує 2 SCC:
-  //
-  // SCC1: 8 → 5 → 9 → 4 → 1 → 7 → (повернення до 8)
-  // SCC2: 10 → 3 → 6 → 11 → 2 → (повернення до 10)
-  const graphObj = {
-    vertices: [
-      { sign: 8 },
-      { sign: 5 },
-      { sign: 9 },
-      { sign: 4 },
-      { sign: 1 },
-      { sign: 7 },
-      { sign: 10 },
-      { sign: 3 },
-      { sign: 6 },
-      { sign: 11 },
-      { sign: 2 }
-    ],
-    neighbourVertices: {
-      "8": [5],
-      "5": [9],
-      "9": [4],
-      "4": [1],
-      "1": [7],
-      "7": [8],
-      "10": [3],
-      "3": [6],
-      "6": [11],
-      "11": [2],
-      "2": [10]
-    },
-    get(sign) {
-      return this.vertices.find(v => v.sign === sign);
-    }
-  };
-
-  const sccFuncSelect = document.getElementById("sccFunctionSelect").value;
-  let sccs;
-  if (sccFuncSelect === "tarianAlgorightm") {
-    sccs = tarjanAlgorithm(graphObj);
-    var resultStr = printSccs(sccs) + "tarjan was used.";
-  } else if (sccFuncSelect === "AlgorightmOfScc") {
-    sccs = algorithmByPaths(graphObj);
-    var resultStr = printSccsByPaths(sccs) + "byParts was used";
-  } else {
-    resultStr = "Не обрано алгоритм для пошуку SCC.";
+  const sccFunctionSelect = document.getElementById("sccFunctionSelect").value;
+  if (!sccFunctionSelect) {
+    alert("Будь ласка, оберіть функцію пошуку сильної зв'язності!");
+    return;
   }
+  
+  const tarjanGraph = createTarjanGraph(graph);
+  
+  let sccs = [];
+  if (sccFunctionSelect === "tarianAlgorightm") {
+    sccs = tarjanAlgorithm(tarjanGraph);
+  } else if (sccFunctionSelect === "AlgorightmOfScc") {
+    sccs = algorithmCCS(tarjanGraph);
+  } else {
+    document.getElementById("result").innerHTML = `
+      <p>Функція <strong>${sccFunctionSelect}</strong> не реалізована.</p>
+    `;
+    return;
+  }
+  
+  const resultStr = printSccs(sccs);
   document.getElementById("result").innerHTML = `<pre>${resultStr}</pre>`;
 });
-
-

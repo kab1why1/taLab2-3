@@ -1,12 +1,12 @@
 /**
- * @param {Object} graph - Об'єкт графа.
- * @returns {Array<Array<number>>} - Масив компонент, де кожна компонента – масив числових позначень вершин.
+ * @param {Object} graph 
+ * @returns {Array<Array<number>>}
  */
 function algorithmByPaths(graph) {
     let index = 0;
-    const indices = new Map(); // Відображення: знак вершини -> індекс
-    const S = []; // Стек для зберігання вершин, що ще не закінчили обхід
-    const P = []; // Стек для зберігання "кореневих" вершин
+    const indices = new Map();
+    const S = [];
+    const P = [];
     const sccs = [];
   
     function dfs(v) {

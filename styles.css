@@ -12,7 +12,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    max-width: 1600px;
+    max-width: 1400px;
     margin: 100px auto;
     padding: 20px;
   }
